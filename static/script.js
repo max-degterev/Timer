@@ -17,6 +17,46 @@
                             '<li>9</li>' +
                         '</ul>';
 
+    var getEstTime = function(est) {
+        var fracs = [
+                (24 * 60 * 60 * 1000),
+                (60 * 60 * 1000),
+                (60 * 1000),
+                (1000)
+            ],
+            res = [],
+            i = 0,
+            l = fracs.length;
+
+        for (; i < l; i++) {
+            if (i > 0) {
+                est = est - fracs[i - 1];
+            }
+
+            res.push(est / fracs[i]);
+        }
+
+        $.map(res, function(val, i) {
+            return (val | 0);
+        });
+
+        return res;
+    };
+    
+    var setSpinner = function(seg, vals) {
+        var l = seg.length,
+            i = 0,
+            next;
+
+        for (; i < l; i++) {
+            next =  -(step * vals[i]) + comp;
+            
+            seg.eq(i).animate({
+                top: next
+            }, duration);
+        }
+    };
+
     var updateStructure = function() {
         var wrap = timer.parent(),
             frag = timer.detach(),
@@ -45,16 +85,4 @@
         });
     }();
 
-    var setSpinner = function(seg, vals) {
-        var l = seg.length,
-            i = 0,
-            next;
 
-        for (; i < l; i++) {
-            next =  -(step * vals[i]) + comp;
-            
-            seg.eq(i).animate({
-                top: next
-            }, duration);
-        }
-    };
