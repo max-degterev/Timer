@@ -3,13 +3,47 @@ Timer = {
     duration: 200,
     
     parseTimeStamp: function(ts) {
+        var est = (est / 1000) << 0, res = {};
 
-        return {
-            days: [0, 1],
-            hours: [1, 4],
-            minutes: [2, 2],
-            seconds: [1, 6]
-        };
+        var units = {
+            second  : 1,
+            minute  : 60,
+            hour    : 60 * 60,
+            day     : 60 * 60 * 24
+        };
+
+        var storage = {
+            seconds : 0,
+            minutes : 0,
+            hours   : 0,
+            days    : 0
+        };
+
+        var conv = function (n) {
+            if (n < 10) {
+                return [0, n];
+            } else {
+                return $.map(n.toString().split(''), function (e) {return +e});
+            }
+        };
+
+        var computed = $.map(['day', 'hour', 'minute', 'second'], function (x) {
+            var xs = x + 's', h = {};
+
+            while ((est - units[x]) > 0) {
+                storage[xs]++;
+                est -= units[x];
+            }
+
+            h[xs] = storage[xs];
+            return h;
+        });
+
+        $.each(computed, function (i, obj) {
+            $.extend(res, obj) ;
+        });
+
+        return res;
     },
     
     setFragment: function(el, val) {
@@ -17,7 +51,7 @@ Timer = {
             leap = (val < curr),
             next = -(step * (val + (leap ? 10 : 0))) + comp;
             
-        if (val === curr) {
+        if (val === curr) { // LOLWTF!
             return;
         }
 
@@ -25,14 +59,12 @@ Timer = {
             top: next
         }, Timer.duration, leap ? function() {
             this.style.top = (-(step * val) + comp) + 'px';
-        } : undefined);
-
-        el.data('curr', val)
+        } : undefined).data('curr', val);
     },
     
     setSpinner: function(seg, vals) {
-        var l = seg.length,
-            i = 0;
+        var i = 0,
+            l = seg.length;
 
         for (; i < l; i++) {
             Timer.setFragment(seg.eq(i), vals[i]);
@@ -52,7 +84,8 @@ Timer = {
 Timer.init = function() {
     var timer = $('#clock_timer'),
         wrap = timer.parent(),
-        frag = timer.detach(),
+        x = 0,
+        y = 0,
         segments = {
             days: timer.find('.days'),
             hours: timer.find('.hours'),
@@ -61,16 +94,19 @@ Timer.init = function() {
         },
         spinner_html = '<ul><li>9</li>';
 
-    for (var x = 0; x < 2; x++) {
-        for (var y = 0; y < 10; y++) {
+    for (; x < 2; x++) {
+        for (; y < 10; y++) {
             spinner_html += '<li>' + y + '</li>'
         }
     }
     spinner_html += '</ul>';
-    
+
+    // Set initial values
     Timer.timestamp = timer.data('est');
     Timer.time = Timer.parseTimeStamp(Timer.timestamp);
 
+    // Create spinners
+    timer.detach();
     $.each(segments, function(key, el) {
         el.html(spinner_html + spinner_html);
         Timer.spinners[key] = segments[key].find('ul');
