@@ -54,10 +54,15 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
     
     background: transparent url('gray_noisy_bg.png') repeat;
 }
+.clock_timer {
+    margin: 0 auto;
+}
 
+/* Timer styles */
 .clock_timer {
     width: 155px;
     height: 86px;
+    
     display: block;
     position: relative;
     background: transparent url('clock_countdown.png') no-repeat;
@@ -85,7 +90,7 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
         top: 42px;
         
 /*        overflow: hidden;*/
-        background: #bada55;
+/*        background: #bada55;*/
     }
     .clock_timer > .hours {
         left: 53px;
@@ -100,6 +105,7 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
         position: absolute;
         left: 0;
         top: -17px;
+/*        top: -413px;*/
     }
     .clock_timer ul + ul {
         left: 14px;
@@ -108,7 +114,7 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
         left: 14px;
     }
 
-
+/* End timer styles */
 
 
 

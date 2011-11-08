@@ -1,6 +1,7 @@
 Timer = {
     spinners: [],
-    duration: 200,
+    duration: 1000,
+    countdown: true,
     
     parseTimeStamp: function(ts) {
         var divisors = [
@@ -17,7 +18,7 @@ Timer = {
         for (; i < j; i++) {
             x = (ts / divisors[i]) | 0;
             ts -= (divisors[i] * x);
-            x = '' + x;
+            x = ('0' + x).slice(-2);
             res.push([+x.charAt(0), +x.charAt(1)]);
         }
         
@@ -26,17 +27,27 @@ Timer = {
     
     setFragment: function(el, val) {
         var curr = el.data('curr'),
-            leap = (val < curr),
-            next = -(step * (val + (leap ? 10 : 0))) + comp;
+            leap, next;
             
         if (val === curr) { // LOLWTF!
             return;
+        }
+        
+        if (Timer.countdown) {
+            // Some weird shit is going on here
+            leap = (val > curr);
+            console.log(leap)
+            next = (step * (val + (leap ? 10 : 0))) + comp;
+        }
+        else {
+            leap = (val < curr);
+            next = -(step * (val + (leap ? 10 : 0))) + comp;
         }
 
         el.animate({
             top: next
         }, Timer.duration, leap ? function() {
-            this.style.top = (-(step * val) + comp) + 'px';
+            this.style.top = ((Timer.countdown ? 1 : -1) * (step * val) + comp) + 'px';
         } : undefined).data('curr', val);
     },
     
@@ -51,7 +62,7 @@ Timer = {
     
     startCountdown: function() {
         setTimeout(Timer.startCountdown, 1000);
-        Timer.timestamp--;
+        Timer.countdown ? (Timer.timestamp--) : (Timer.timestamp++);
         Timer.time = Timer.parseTimeStamp(Timer.timestamp);
         for (var i = 0, j = Timer.spinners.length; i < j; i++) {
             Timer.setSpinner(Timer.spinners[i], Timer.time[i]);
@@ -70,13 +81,25 @@ Timer.init = function() {
             timer.find('.minutes'),
             timer.find('.seconds')
         ],
-        spinner_html = '<ul><li>9</li>';
+        spinner_html = '<ul>';
 
-    for (i = 0; i < 2; i++) {
-        for (j = 0; j < 10; j++) {
-            spinner_html += '<li>' + j + '</li>';
+    if (Timer.countdown) {
+        for (i = 0; i < 2; i++) {
+            for (j = 9; j >= 0; j--) {
+                spinner_html += '<li>' + j + '</li>';
+            }
+        }
+        spinner_html += '<li>9</li>'
+    }
+    else {
+        spinner_html += '<li>9</li>'
+        for (i = 0; i < 2; i++) {
+            for (j = 0; j < 10; j++) {
+                spinner_html += '<li>' + j + '</li>';
+            }
         }
     }
+    
     spinner_html += '</ul>';
 
     // Set initial values
@@ -99,7 +122,7 @@ Timer.init = function() {
     comp = parseInt(Timer.spinners[0].eq(0).css('top'), 10);
     step = Timer.spinners[0].find('li').eq(0).height();
     
-    Timer.startCountdown();
+    //Timer.startCountdown();
 }();
 
 
