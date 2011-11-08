@@ -10,10 +10,11 @@ Timer = {
             1
         ],
         i = 0,
-        j = divisors.length;
+        j = divisors.length,
+        res = [];
         
         for (; i < j; i++) {
-            
+            res[i] = (ts / divisors[i]) | 0;
         }
 
         return [
