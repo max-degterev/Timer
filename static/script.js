@@ -4,25 +4,24 @@ Timer = {
     
     parseTimeStamp: function(ts) {
         var divisors = [
-            24 * 60 * 60,
-            60 * 60,
-            60,
-            1
-        ],
+                24 * 60 * 60,
+                60 * 60,
+                60,
+                1
+            ],
         i = 0,
         j = divisors.length,
+        x,
         res = [];
         
         for (; i < j; i++) {
-            res[i] = (ts / divisors[i]) | 0;
+            x = (ts / divisors[i]) | 0;
+            ts -= (divisors[i] * x);
+            x = '' + x;
+            res.push([+x.charAt(0), +x.charAt(1)]);
         }
-
-        return [
-            [0, 1],
-            [1, 4],
-            [2, 2],
-            [1, 6]
-        ];
+        
+        return res;
     },
     
     setFragment: function(el, val) {
@@ -54,7 +53,7 @@ Timer = {
         setTimeout(Timer.startCountdown, 1000);
         Timer.timestamp--;
         Timer.time = Timer.parseTimeStamp(Timer.timestamp);
-        for(var i = 0, j = Timer.spinners.length; i < j; i++) {
+        for (var i = 0, j = Timer.spinners.length; i < j; i++) {
             Timer.setSpinner(Timer.spinners[i], Timer.time[i]);
         }
     }
@@ -73,9 +72,9 @@ Timer.init = function() {
         ],
         spinner_html = '<ul><li>9</li>';
 
-    for (; i < 2; i++) {
-        for (; j < 10; j++) {
-            spinner_html += '<li>' + j + '</li>'
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < 10; j++) {
+            spinner_html += '<li>' + j + '</li>';
         }
     }
     spinner_html += '</ul>';
