@@ -1,49 +1,15 @@
 Timer = {
-    spinners: {},
+    spinners: [],
     duration: 200,
     
     parseTimeStamp: function(ts) {
-        var est = (est / 1000) << 0, res = {};
-
-        var units = {
-            second  : 1,
-            minute  : 60,
-            hour    : 60 * 60,
-            day     : 60 * 60 * 24
-        };
-
-        var storage = {
-            seconds : 0,
-            minutes : 0,
-            hours   : 0,
-            days    : 0
-        };
-
-        var conv = function (n) {
-            if (n < 10) {
-                return [0, n];
-            } else {
-                return $.map(n.toString().split(''), function (e) {return +e});
-            }
-        };
-
-        var computed = $.map(['day', 'hour', 'minute', 'second'], function (x) {
-            var xs = x + 's', h = {};
-
-            while ((est - units[x]) > 0) {
-                storage[xs]++;
-                est -= units[x];
-            }
-
-            h[xs] = storage[xs];
-            return h;
-        });
-
-        $.each(computed, function (i, obj) {
-            $.extend(res, obj) ;
-        });
-
-        return res;
+        console.log(ts);
+        return [
+            [0, 1],
+            [1, 4],
+            [2, 2],
+            [1, 6]
+        ];
     },
     
     setFragment: function(el, val) {
@@ -64,9 +30,9 @@ Timer = {
     
     setSpinner: function(seg, vals) {
         var i = 0,
-            l = seg.length;
+            j = seg.length;
 
-        for (; i < l; i++) {
+        for (; i < j; i++) {
             Timer.setFragment(seg.eq(i), vals[i]);
         }
     },
@@ -74,9 +40,10 @@ Timer = {
     startCountdown: function() {
         Timer.timestamp--;
         Timer.time = Timer.parseTimeStamp(Timer.timestamp);
-        $.each(Timer.spinners, function(key, el) {
-            Timer.setSpinner(el, Timer.time[key])
-        });
+        
+        for(var i = 0, j = Timer.spinners.length; i < j; i++) {
+            Timer.setSpinner(Timer.spinners[i], Timer.time[i]);
+        }
         setTimeout(Timer.startCountdown, 1000);
     }
 };
@@ -84,44 +51,42 @@ Timer = {
 Timer.init = function() {
     var timer = $('#clock_timer'),
         wrap = timer.parent(),
-        x = 0,
-        y = 0,
-        segments = {
-            days: timer.find('.days'),
-            hours: timer.find('.hours'),
-            minutes: timer.find('.minutes'),
-            seconds: timer.find('.seconds')
-        },
+        i = 0,
+        j = 0,
+        segments = [
+            timer.find('.days'),
+            timer.find('.hours'),
+            timer.find('.minutes'),
+            timer.find('.seconds')
+        ],
         spinner_html = '<ul><li>9</li>';
 
-    for (; x < 2; x++) {
-        for (; y < 10; y++) {
-            spinner_html += '<li>' + y + '</li>'
+    for (; i < 2; i++) {
+        for (; j < 10; j++) {
+            spinner_html += '<li>' + j + '</li>'
         }
     }
     spinner_html += '</ul>';
 
     // Set initial values
-    Timer.timestamp = timer.data('est');
+    Timer.timestamp = (+timer.data('est') / 1000) | 0;
     Timer.time = Timer.parseTimeStamp(Timer.timestamp);
 
     // Create spinners
     timer.detach();
-    $.each(segments, function(key, el) {
-        el.html(spinner_html + spinner_html);
-        Timer.spinners[key] = segments[key].find('ul');
-        Timer.spinners[key].eq(1).addClass('second');
-        Timer.spinners[key].data('curr', 0);
-    });
+    
+    for (i = 0, j = segments.length; i < j; i++) {
+        segments[i].html(spinner_html + spinner_html);
+        Timer.spinners[i] = segments[i].find('ul');
+        Timer.spinners[i].eq(1).addClass('second');
+        Timer.spinners[i].data('curr', 0);
+    }
 
     wrap.append(timer);
     
-    comp = parseInt(Timer.spinners.days.eq(0).css('top'), 10);
-    step = Timer.spinners.days.find('li').eq(0).height();
-    
-    $.each(Timer.spinners, function(key, el) {
-        Timer.setSpinner(el, Timer.time[key])
-    });
+    // Calculate offsets
+    comp = parseInt(Timer.spinners[0].eq(0).css('top'), 10);
+    step = Timer.spinners[0].find('li').eq(0).height();
     
     Timer.startCountdown();
 }();
