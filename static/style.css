@@ -84,6 +84,7 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
         left: 11px;
         top: 42px;
         
+/*        overflow: hidden;*/
         background: #bada55;
     }
     .clock_timer > .hours {

@@ -15,6 +15,16 @@
                             '<li>7</li>' +
                             '<li>8</li>' +
                             '<li>9</li>' +
+                            '<li>0</li>' +
+                            '<li>1</li>' +
+                            '<li>2</li>' +
+                            '<li>3</li>' +
+                            '<li>4</li>' +
+                            '<li>5</li>' +
+                            '<li>6</li>' +
+                            '<li>7</li>' +
+                            '<li>8</li>' +
+                            '<li>9</li>' +
                         '</ul>';
 
     var getEstTime = function(est) {
@@ -43,17 +53,30 @@
         return res;
     };
     
+    var setFragment = function(el, val) {
+        var curr = el.data('curr'),
+            leap = (val < curr),
+            next = -(step * (val + (leap ? 10 : 0))) + comp;
+            
+        if (val === curr) {
+            return;
+        }
+
+        el.animate({
+            top: next
+        }, duration, leap ? function() {
+            this.style.top = (-(step * val) + comp) + 'px';
+        } : undefined);
+
+        el.data('curr', val)
+    };
+    
     var setSpinner = function(seg, vals) {
         var l = seg.length,
-            i = 0,
-            next;
+            i = 0;
 
         for (; i < l; i++) {
-            next =  -(step * vals[i]) + comp;
-            
-            seg.eq(i).animate({
-                top: next
-            }, duration);
+            setFragment(seg.eq(i), vals[i]);
         }
     };
 
@@ -71,6 +94,7 @@
             el.html(spinner_html+spinner_html);
             spinners[key] = segments[key].find('ul');
             spinners[key].eq(1).addClass('second');
+            spinners[key].data('curr', 0);
         });
 
         wrap.append(timer);
