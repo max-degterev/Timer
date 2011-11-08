@@ -3,7 +3,19 @@ Timer = {
     duration: 200,
     
     parseTimeStamp: function(ts) {
-        console.log(ts);
+        var divisors = [
+            24 * 60 * 60,
+            60 * 60,
+            60,
+            1
+        ],
+        i = 0,
+        j = divisors.length;
+        
+        for (; i < j; i++) {
+            
+        }
+
         return [
             [0, 1],
             [1, 4],
@@ -38,13 +50,12 @@ Timer = {
     },
     
     startCountdown: function() {
+        setTimeout(Timer.startCountdown, 1000);
         Timer.timestamp--;
         Timer.time = Timer.parseTimeStamp(Timer.timestamp);
-        
         for(var i = 0, j = Timer.spinners.length; i < j; i++) {
             Timer.setSpinner(Timer.spinners[i], Timer.time[i]);
         }
-        setTimeout(Timer.startCountdown, 1000);
     }
 };
     
