@@ -9,7 +9,7 @@ var Timer = function (el, options) {
     
     this.spinners = [];
     
-    var timer = el.find('.timer')
+    var timer = el.find('.timer'),
         i = 0,
         j = 0,
         segments = [
@@ -21,7 +21,7 @@ var Timer = function (el, options) {
         spinner_html = '<ul>';
 
     if (this.options.countdown) {
-        spinner_html += '<li>0</li>'
+        spinner_html += '<li>0</li>';
         for (i = 0; i < 2; i++) {
             for (j = 9; j >= 0; j--) {
                 spinner_html += '<li>' + j + '</li>';
@@ -29,7 +29,7 @@ var Timer = function (el, options) {
         }
     }
     else {
-        spinner_html += '<li>9</li>'
+        spinner_html += '<li>9</li>';
         for (i = 0; i < 2; i++) {
             for (j = 0; j < 10; j++) {
                 spinner_html += '<li>' + j + '</li>';
@@ -132,7 +132,10 @@ Timer.prototype.setSpinner = function(seg, vals) {
 };
 
 Timer.prototype.startCountdown = function() {
-    setTimeout($.proxy(this.startCountdown, this), 1000);
+    var that = this;
+    setTimeout(function() {
+        Timer.prototype.startCountdown.call(that);
+    }, 1000);
     this.options.countdown ? (this.timestamp--) : (this.timestamp++);
     this.time = this.parseTimeStamp(this.timestamp);
     for (var i = 0, j = this.spinners.length; i < j; i++) {
@@ -147,15 +150,14 @@ $.fn.timer = function(options) {
         var el = $(this),
             timer = el.data('timer');
         
-        if(!timer)
+        if (!timer)
         {
             el.data('timer', new Timer(el, options));
         }
         else if(options)
         {
-            timer.set(options)
+            timer.set(options);
         }
-        
     });
     
     return els.eq(0).data('timer');

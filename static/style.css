@@ -76,7 +76,7 @@ p {
 
     font-weight: bold;
     font-size: 22px;
-    line-height: 22px;
+    line-height: 32px;
     color: #000;
     text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
 
@@ -112,6 +112,7 @@ p {
         position: absolute;
         left: 0;
         top: -17px;
+        line-height: 22px;
     }
     .timer .col2 {
         left: 14px;
