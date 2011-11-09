@@ -97,6 +97,7 @@ p {
         top: 42px;
 
         overflow: hidden;
+        letter-spacing: 2px;
 /*        background: #bada55;*/
     }
     .spinner > .dos {
