@@ -61,12 +61,12 @@ p {
     color: #000;
     text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
 }
-.timer {
+.spinner {
     margin: 0 auto;
 }
 
 /* Timer styles */
-.timer {
+.spinner {
     width: 155px;
     height: 86px;
 
@@ -88,7 +88,7 @@ p {
 
 	cursor: default;
 }
-    .timer > div {
+    .spinner > div {
         width: 27px;
         height: 32px;
 
@@ -99,22 +99,22 @@ p {
         overflow: hidden;
 /*        background: #bada55;*/
     }
-    .timer > .hours {
+    .spinner > .hours {
         left: 53px;
     }
-    .timer > .minutes {
+    .spinner > .minutes {
         left: 88px;
     }
-    .timer > .seconds {
+    .spinner > .seconds {
         left: 123px;
     }
-    .timer ul {
+    .spinner ul {
         position: absolute;
         left: 0;
         top: -17px;
         line-height: 22px;
     }
-    .timer .col2 {
+    .spinner .col2 {
         left: 14px;
     }
 

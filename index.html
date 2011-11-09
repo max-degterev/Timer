@@ -13,7 +13,7 @@
     <div id="main">
         <p>The one and only countdown</p>
         <div class="clock_timer down">
-            <time class="timer" data-est="90087664" datetime="2012-12-14T15:22:33Z">
+            <time class="spinner" data-est="90087664" datetime="2012-12-14T15:22:33Z">
                 <div class="days">14</div>
                 <div class="hours">12</div>
                 <div class="minutes">12</div>
@@ -21,7 +21,7 @@
             </time>
         </div>
         <div class="clock_timer up">
-            <time class="timer" data-est="10087664" datetime="2012-12-14T15:22:33Z">
+            <time class="spinner" data-est="10087664" datetime="2012-12-14T15:22:33Z">
                 <div class="days">14</div>
                 <div class="hours">12</div>
                 <div class="minutes">12</div>
@@ -29,7 +29,7 @@
             </time>
         </div>
         <div class="clock_timer stopped">
-            <time class="timer" data-est="60087664" datetime="2012-12-14T15:22:33Z">
+            <time class="spinner" data-est="60087664" datetime="2012-12-14T15:22:33Z">
                 <div class="days">14</div>
                 <div class="hours">12</div>
                 <div class="minutes">12</div>
@@ -42,8 +42,13 @@
     <script defer src="static/script.js"></script>
     <script>
      $(function() {
-         $('.clock_timer.down').timer();
-         $('.clock_timer.up').timer({ countdown: false });
+         $('.clock_timer.down').spinner();
+         setTimeout(function() {
+             $('.clock_timer.up').spinner({ backward: false });
+         }, 500);
+         
+         
+         $('.clock_timer.stopped').spinner({ backward: false, timer: false }).setSpinner([[1,1],[0,0],[1,0],[1,0]]);
      });
     </script>
 </body>
