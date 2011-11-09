@@ -57,7 +57,6 @@
         return this;
     };
 
-    // method example
     Spinner.prototype.set = function(options) {
         this.options = $.extend(this.options, options);
         return this;
@@ -89,8 +88,8 @@
         var curr = el.data('curr'),
             leap, next;
 
-        if (val === curr) { // LOLWTF!
-            return;
+        if (val === curr) {// No need to update
+            return this;
         }
 
         if (this.options.backward) {
