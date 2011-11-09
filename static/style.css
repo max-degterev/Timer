@@ -105,12 +105,8 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
         position: absolute;
         left: 0;
         top: -17px;
-/*        top: -413px;*/
     }
-    .clock_timer ul + ul {
-        left: 14px;
-    }
-    .clock_timer .second {
+    .clock_timer .col2 {
         left: 14px;
     }
 

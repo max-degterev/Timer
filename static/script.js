@@ -1,6 +1,6 @@
 Timer = {
     spinners: [],
-    duration: 1000,
+    duration: 500,
     countdown: true,
     
     parseTimeStamp: function(ts) {
@@ -34,21 +34,25 @@ Timer = {
         }
         
         if (Timer.countdown) {
-            // Some weird shit is going on here
             leap = (val > curr);
-            console.log(leap)
-            next = (step * (val + (leap ? 10 : 0))) + comp;
+            next = -(step * (9 - val + (leap ? 10 : 0))) + comp;
+            
+            el.animate({
+                top: next
+            }, Timer.duration, leap ? function() {
+                this.style.top = (-(step * (9 - val)) + comp) + 'px';
+            } : undefined).data('curr', val);
         }
         else {
             leap = (val < curr);
             next = -(step * (val + (leap ? 10 : 0))) + comp;
+            
+            el.animate({
+                top: next
+            }, Timer.duration, leap ? function() {
+                this.style.top = (-(step * val) + comp) + 'px';
+            } : undefined).data('curr', val);
         }
-
-        el.animate({
-            top: next
-        }, Timer.duration, leap ? function() {
-            this.style.top = ((Timer.countdown ? 1 : -1) * (step * val) + comp) + 'px';
-        } : undefined).data('curr', val);
     },
     
     setSpinner: function(seg, vals) {
@@ -84,12 +88,12 @@ Timer.init = function() {
         spinner_html = '<ul>';
 
     if (Timer.countdown) {
+        spinner_html += '<li>0</li>'
         for (i = 0; i < 2; i++) {
             for (j = 9; j >= 0; j--) {
                 spinner_html += '<li>' + j + '</li>';
             }
         }
-        spinner_html += '<li>9</li>'
     }
     else {
         spinner_html += '<li>9</li>'
@@ -112,8 +116,8 @@ Timer.init = function() {
     for (i = 0, j = segments.length; i < j; i++) {
         segments[i].html(spinner_html + spinner_html);
         Timer.spinners[i] = segments[i].find('ul');
-        Timer.spinners[i].eq(1).addClass('second');
-        Timer.spinners[i].data('curr', 0);
+        Timer.spinners[i].eq(1).addClass('col2');
+        Timer.spinners[i].data('curr', Timer.countdown ? 9 : 0);
     }
 
     wrap.append(timer);
@@ -122,7 +126,7 @@ Timer.init = function() {
     comp = parseInt(Timer.spinners[0].eq(0).css('top'), 10);
     step = Timer.spinners[0].find('li').eq(0).height();
     
-    //Timer.startCountdown();
+    Timer.startCountdown();
 }();
 
 
