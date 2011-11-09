@@ -3,7 +3,7 @@
         this.options = options;
 
         this.spinners = [];
-    
+
         var spinner = el.find('.spinner'),
             i, j, n,
             segments = spinner.find('> div'),
@@ -32,9 +32,9 @@
         spinner.detach();
         for (i = 0, j = segments.length; i < j; i++) {
             segments.eq(i).html(spinner_html + spinner_html);
-            
+
             this.spinners[i] = segments.eq(i).find('ul');
-            
+
             for (n = 0; n < this.options.cols; n++) {
                 this.spinners[i].eq(n).addClass('col' + (n + 1)); // Only for styling
             }
@@ -53,12 +53,12 @@
             this.time = this.parseTimeStamp(this.timestamp);
             this.startCountdown();
         }
-    
+
         return this;
     };
 
     Spinner.prototype.set = function(options) {
-        this.options = $.extend(this.options, options);
+        $.extend(this.options, options);
         return this;
     };
 
@@ -124,7 +124,7 @@
         }
         return this;
     };
-    
+
     Spinner.prototype.setSpinner = function(arr) {
         for (var i = 0, j = this.spinners.length; i < j; i++) {
             this.setSpinnerBySegment(this.spinners[i], arr[i]);
@@ -156,23 +156,21 @@
         this.each(function() {
             var el = $(this),
                 spinner = el.data('spinner');
-        
-            if (options) { 
-                $.extend(settings, options);
-            }
-            // sane options
-            (settings.duration > 800) && (settings.duration = 800);
 
-            if (!spinner)
-            {
+            if (!spinner) {
+                if (options) {
+                    $.extend(settings, options);
+                }
+                // sane options
+                (settings.duration > 800) && (settings.duration = 800);
+
                 el.data('spinner', new Spinner(el, settings));
             }
-            else if(options)
-            {
+            else if(options) {
                 spinner.set(options);
             }
         });
-    
+
         return this.eq(0).data('spinner');
     };
 })(jQuery);
