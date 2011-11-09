@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="en">
 <head>
     <meta charset="utf-8">
 
@@ -14,27 +14,35 @@
         <p>The one and only countdown</p>
         <div class="clock_timer down">
             <time class="spinner" data-est="90087664" datetime="2012-12-14T15:22:33Z">
-                <div class="days">14</div>
-                <div class="hours">12</div>
-                <div class="minutes">12</div>
-                <div class="seconds">12</div>
+                <div class="uno days">14</div>
+                <div class="dos hours">12</div>
+                <div class="tres minutes">12</div>
+                <div class="cuatro seconds">12</div>
             </time>
         </div>
         <div class="clock_timer up">
             <time class="spinner" data-est="10087664" datetime="2012-12-14T15:22:33Z">
-                <div class="days">14</div>
-                <div class="hours">12</div>
-                <div class="minutes">12</div>
-                <div class="seconds">12</div>
+                <div class="uno days">14</div>
+                <div class="dos hours">12</div>
+                <div class="tres minutes">12</div>
+                <div class="cuatro seconds">12</div>
             </time>
         </div>
         <div class="clock_timer stopped">
-            <time class="spinner" data-est="60087664" datetime="2012-12-14T15:22:33Z">
-                <div class="days">14</div>
-                <div class="hours">12</div>
-                <div class="minutes">12</div>
-                <div class="seconds">12</div>
-            </time>
+            <div class="spinner">
+                <div class="uno">14</div>
+                <div class="dos">12</div>
+                <div class="tres">12</div>
+                <div class="cuatro">12</div>
+            </div>
+        </div>
+        <div class="clock_timer nojs">
+            <div class="spinner">
+                <div class="uno">10</div>
+                <div class="dos">01</div>
+                <div class="tres">80</div>
+                <div class="cuatro">55</div>
+            </div>
         </div>
     </div>
 
@@ -46,9 +54,8 @@
          setTimeout(function() {
              $('.clock_timer.up').spinner({ backward: false });
          }, 500);
-         
-         
-         $('.clock_timer.stopped').spinner({ backward: false, timer: false }).setSpinner([[0,0],[0,3],[1,3],[3,7]]);
+
+         $('.clock_timer.stopped').spinner({ timer: false }).setSpinner([[0,0],[0,3],[1,3],[3,7]]);
      });
     </script>
 </body>

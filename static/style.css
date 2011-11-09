@@ -99,13 +99,13 @@ p {
         overflow: hidden;
 /*        background: #bada55;*/
     }
-    .spinner > .hours {
+    .spinner > .dos {
         left: 53px;
     }
-    .spinner > .minutes {
+    .spinner > .tres {
         left: 88px;
     }
-    .spinner > .seconds {
+    .spinner > .cuatro {
         left: 123px;
     }
     .spinner ul {
