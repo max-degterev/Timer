@@ -1,8 +1,8 @@
 Timer = {
     spinners: [],
-    duration: 500,
+    duration: 200,
     countdown: true,
-    
+
     parseTimeStamp: function(ts) {
         var divisors = [
                 24 * 60 * 60,
@@ -14,29 +14,29 @@ Timer = {
         j = divisors.length,
         x,
         res = [];
-        
+
         for (; i < j; i++) {
             x = (ts / divisors[i]) | 0;
             ts -= (divisors[i] * x);
             x = ('0' + x).slice(-2);
             res.push([+x.charAt(0), +x.charAt(1)]);
         }
-        
+
         return res;
     },
-    
+
     setFragment: function(el, val) {
         var curr = el.data('curr'),
             leap, next;
-            
+
         if (val === curr) { // LOLWTF!
             return;
         }
-        
+
         if (Timer.countdown) {
             leap = (val > curr);
             next = -(step * (9 - val + (leap ? 10 : 0))) + comp;
-            
+
             el.animate({
                 top: next
             }, Timer.duration, leap ? function() {
@@ -46,7 +46,7 @@ Timer = {
         else {
             leap = (val < curr);
             next = -(step * (val + (leap ? 10 : 0))) + comp;
-            
+
             el.animate({
                 top: next
             }, Timer.duration, leap ? function() {
@@ -54,7 +54,7 @@ Timer = {
             } : undefined).data('curr', val);
         }
     },
-    
+
     setSpinner: function(seg, vals) {
         var i = 0,
             j = seg.length;
@@ -63,7 +63,7 @@ Timer = {
             Timer.setFragment(seg.eq(i), vals[i]);
         }
     },
-    
+
     startCountdown: function() {
         setTimeout(Timer.startCountdown, 1000);
         Timer.countdown ? (Timer.timestamp--) : (Timer.timestamp++);
@@ -73,7 +73,7 @@ Timer = {
         }
     }
 };
-    
+
 Timer.init = function() {
     var timer = $('#clock_timer'),
         wrap = timer.parent(),
@@ -103,7 +103,7 @@ Timer.init = function() {
             }
         }
     }
-    
+
     spinner_html += '</ul>';
 
     // Set initial values
@@ -112,7 +112,7 @@ Timer.init = function() {
 
     // Create spinners
     timer.detach();
-    
+
     for (i = 0, j = segments.length; i < j; i++) {
         segments[i].html(spinner_html + spinner_html);
         Timer.spinners[i] = segments[i].find('ul');
@@ -121,11 +121,11 @@ Timer.init = function() {
     }
 
     wrap.append(timer);
-    
+
     // Calculate offsets
     comp = parseInt(Timer.spinners[0].eq(0).css('top'), 10);
     step = Timer.spinners[0].find('li').eq(0).height();
-    
+
     Timer.startCountdown();
 }();
 
