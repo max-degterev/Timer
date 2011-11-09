@@ -113,6 +113,7 @@
                 this.style.top = (-(step * val) + comp) + 'px';
             } : undefined).data('curr', val);
         }
+        return this;
     };
 
     Spinner.prototype.setSpinnerBySegment = function(seg, vals) {
@@ -122,12 +123,14 @@
         for (; i < j; i++) {
             this.setFragment(seg.eq(i), vals[i]);
         }
+        return this;
     };
     
     Spinner.prototype.setSpinner = function(arr) {
         for (var i = 0, j = this.spinners.length; i < j; i++) {
             this.setSpinnerBySegment(this.spinners[i], arr[i]);
         }
+        return this;
     };
 
     Spinner.prototype.startCountdown = function() {
@@ -140,6 +143,7 @@
         for (var i = 0, j = this.spinners.length; i < j; i++) {
             this.setSpinnerBySegment(this.spinners[i], this.time[i]);
         }
+        return this;
     };
 
     $.fn.spinner = function(options) {
