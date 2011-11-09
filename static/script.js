@@ -158,9 +158,8 @@
                 spinner = el.data('spinner');
 
             if (!spinner) {
-                if (options) {
-                    $.extend(settings, options);
-                }
+                options && $.extend(settings, options);
+
                 // sane options
                 (settings.duration > 800) && (settings.duration = 800);
 
