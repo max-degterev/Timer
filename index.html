@@ -12,7 +12,7 @@
 <body>
     <div id="main">
         <p>The one and only countdown</p>
-        <div class="clock_timer down">
+        <div class="rotating_spinner down">
             <time class="spinner" data-est="90087664" datetime="2012-12-14T15:22:33Z">
                 <div class="uno days">14</div>
                 <div class="dos hours">12</div>
@@ -20,7 +20,7 @@
                 <div class="cuatro seconds">12</div>
             </time>
         </div>
-        <div class="clock_timer up">
+        <div class="rotating_spinner up">
             <time class="spinner" data-est="10087664" datetime="2012-12-14T15:22:33Z">
                 <div class="uno days">14</div>
                 <div class="dos hours">12</div>
@@ -28,7 +28,7 @@
                 <div class="cuatro seconds">12</div>
             </time>
         </div>
-        <div class="clock_timer stopped">
+        <div class="rotating_spinner stopped">
             <div class="spinner">
                 <div class="uno">14</div>
                 <div class="dos">12</div>
@@ -36,7 +36,7 @@
                 <div class="cuatro">12</div>
             </div>
         </div>
-        <div class="clock_timer nojs">
+        <div class="rotating_spinner nojs">
             <div class="spinner">
                 <div class="uno">00</div>
                 <div class="dos">03</div>
@@ -50,12 +50,12 @@
     <script defer src="static/script.js"></script>
     <script>
      $(function() {
-         $('.clock_timer.down').spinner();
+         $('.rotating_spinner.down').spinner();
          setTimeout(function() {
-             $('.clock_timer.up').spinner({ backward: false });
+             $('.rotating_spinner.up').spinner({ backward: false });
          }, 500);
 
-         $('.clock_timer.stopped').spinner({ timer: false }).setSpinner([[0,0],[0,3],[1,3],[3,7]]);
+         $('.rotating_spinner.stopped').spinner({ timer: false }).setSpinner([[0,0],[0,3],[1,3],[3,7]]);
      });
     </script>
 </body>
