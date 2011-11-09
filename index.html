@@ -12,8 +12,8 @@
 <body>
     <div id="main">
         <p>The one and only countdown</p>
-        <div class="timer-wrap">
-            <time id="clock_timer" class="clock_timer" data-est="90087664" datetime="2012-12-14T15:22:33Z">
+        <div class="clock_timer">
+            <time class="timer" data-est="90087664" datetime="2012-12-14T15:22:33Z">
                 <div class="days">14</div>
                 <div class="hours">12</div>
                 <div class="minutes">12</div>
@@ -24,5 +24,10 @@
 
     <script src="static/jquery-1.7.js"></script>
     <script defer src="static/script.js"></script>
+    <script>
+     $(function() {
+         $('.clock_timer').timer();
+     });
+    </script>
 </body>
 </html>

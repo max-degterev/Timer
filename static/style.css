@@ -61,12 +61,12 @@ p {
     color: #000;
     text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
 }
-.clock_timer {
+.timer {
     margin: 0 auto;
 }
 
 /* Timer styles */
-.clock_timer {
+.timer {
     width: 155px;
     height: 86px;
 
@@ -88,7 +88,7 @@ p {
 
 	cursor: default;
 }
-    .clock_timer > div {
+    .timer > div {
         width: 27px;
         height: 32px;
 
@@ -99,21 +99,21 @@ p {
         overflow: hidden;
 /*        background: #bada55;*/
     }
-    .clock_timer > .hours {
+    .timer > .hours {
         left: 53px;
     }
-    .clock_timer > .minutes {
+    .timer > .minutes {
         left: 88px;
     }
-    .clock_timer > .seconds {
+    .timer > .seconds {
         left: 123px;
     }
-    .clock_timer ul {
+    .timer ul {
         position: absolute;
         left: 0;
         top: -17px;
     }
-    .clock_timer .col2 {
+    .timer .col2 {
         left: 14px;
     }
 
