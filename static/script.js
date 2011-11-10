@@ -5,13 +5,13 @@
         this.spinners = [];
 
         var spinner = el.find('.spinner'),
-            i, j, n,
+            i, j, n, str,
             segments = spinner.find('> div'),
             spinner_html = '<ul>';
 
         if (this.options.backward) {
             spinner_html += '<li>0</li>';
-            for (i = 0; i < this.options.cols; i++) {
+            for (i = 0; i < 2; i++) {
                 for (j = 9; j >= 0; j--) {
                     spinner_html += '<li>' + j + '</li>';
                 }
@@ -19,7 +19,7 @@
         }
         else {
             spinner_html += '<li>9</li>';
-            for (i = 0; i < this.options.cols; i++) {
+            for (i = 0; i < 2; i++) {
                 for (j = 0; j < 10; j++) {
                     spinner_html += '<li>' + j + '</li>';
                 }
@@ -31,11 +31,16 @@
         // Create spinners
         spinner.detach();
         for (i = 0, j = segments.length; i < j; i++) {
-            segments.eq(i).html(spinner_html + spinner_html);
+            str = '';
+            for (n = 0; n < this.options.blocks[i]; n++) {
+                str += spinner_html;
+            }
+            
+            segments.eq(i).html(str);
 
             this.spinners[i] = segments.eq(i).find('ul');
 
-            for (n = 0; n < this.options.cols; n++) {
+            for (n = 0; n < this.options.blocks[i]; n++) {
                 this.spinners[i].eq(n).addClass('col' + (n + 1)); // Only for styling
             }
 
@@ -150,7 +155,7 @@
             duration: 200,
             backward: true,
             timer: true,
-            cols: 2
+            blocks: [2, 2, 2, 2]
         };
 
         this.each(function() {
