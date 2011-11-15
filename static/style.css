@@ -75,7 +75,7 @@ p {
     background: transparent url('clock_countdown.png') no-repeat;
 
     color: #000;
-    font: bold 22px/32px Arial,sans-serif;
+    font: bold 22px/34px Arial,sans-serif;
     text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
 
     -webkit-user-select: none;
@@ -87,15 +87,15 @@ p {
 	cursor: default;
 }
     .spinner > div {
-        width: 27px;
-        height: 32px;
+        width: 28px;
+        height: 34px;
 
         position: absolute;
         left: 11px;
-        top: 42px;
+        top: 41px;
 
         overflow: hidden;
-        letter-spacing: 2px;
+        letter-spacing: 4px;
 /*        background: #bada55;*/
     }
     .spinner > .dos {
@@ -110,11 +110,11 @@ p {
     .spinner ul {
         position: absolute;
         left: 0;
-        top: -17px;
+        top: -16px;
         line-height: 22px;
     }
     .spinner .col2 {
-        left: 14px;
+        left: 16px;
     }
 
 /* End timer styles */
