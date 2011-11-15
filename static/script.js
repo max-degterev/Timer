@@ -1,5 +1,26 @@
 (function($){
+    var tab_state = true;
+    
+    var focusHandler = function(e) {
+        tab_state = true;
+    };
+    
+    var blurHandler = function(e) {
+        tab_state = false;
+    };
+    
+    // Set active tab event handlers
+    if (/*@cc_on!@*/false) { // check for Internet Explorer
+        document.onfocusin = focusHandler;
+        document.onfocusout = blurHandler;
+    } else {
+        window.onfocus = focusHandler;
+        window.onblur = blurHandler;
+    }
+
     var Spinner = function (el, options) {
+        var self = this;
+
         this.options = options;
 
         this.spinners = [];
@@ -138,15 +159,19 @@
     };
 
     Spinner.prototype.startCountdown = function() {
-        var that = this;
+        var self = this;
         setTimeout(function() {
-            Spinner.prototype.startCountdown.call(that);
+            Spinner.prototype.startCountdown.call(self);
         }, 1000);
         this.options.backward ? (this.timestamp--) : (this.timestamp++);
-        this.time = this.parseTimeStamp(this.timestamp);
-        for (var i = 0, j = this.spinners.length; i < j; i++) {
-            this.setSpinnerBySegment(this.spinners[i], this.time[i]);
+
+        if (tab_state) {
+            this.time = this.parseTimeStamp(this.timestamp);
+            for (var i = 0, j = this.spinners.length; i < j; i++) {
+                this.setSpinnerBySegment(this.spinners[i], this.time[i]);
+            }
         }
+
         return this;
     };
 
