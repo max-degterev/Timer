@@ -159,11 +159,14 @@
     };
 
     Spinner.prototype.startCountdown = function() {
-        var self = this;
-        setTimeout(function() {
+        var self = this,
+            counting = true;
+        
+        this.options.backward ? (this.timestamp--) : (this.timestamp++);
+        
+        (this.timestamp > 0) && setTimeout(function() {
             Spinner.prototype.startCountdown.call(self);
         }, 1000);
-        this.options.backward ? (this.timestamp--) : (this.timestamp++);
 
         if (tab_state) {
             this.time = this.parseTimeStamp(this.timestamp);
